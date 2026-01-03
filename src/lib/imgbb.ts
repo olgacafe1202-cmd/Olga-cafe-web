@@ -1,3 +1,4 @@
+// ImgBB API for image uploads
 const IMGBB_API_KEY = "983c65c18779a75c25d95b44f228a648";
 
 export async function uploadToImgBB(file: File): Promise<string> {
