@@ -2,9 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const IMGBB_API_KEY = "983c65c18779a75c25d95b44f228a648";
 
-export const runtime = 'nodejs';
-export const dynamic = 'force-dynamic';
-
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
@@ -19,7 +16,7 @@ export async function POST(request: NextRequest) {
     const buffer = Buffer.from(bytes);
     const base64 = buffer.toString('base64');
 
-    // Create URLSearchParams for ImgBB (they prefer this format)
+    // Create URLSearchParams for ImgBB
     const params = new URLSearchParams();
     params.append('key', IMGBB_API_KEY);
     params.append('image', base64);
