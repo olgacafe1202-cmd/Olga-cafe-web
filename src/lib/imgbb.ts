@@ -6,23 +6,36 @@ export async function uploadToImgBB(file: File): Promise<string> {
     throw new Error('ImgBB API key not configured');
   }
 
-  const formData = new FormData();
-  formData.append('image', file);
+  // Convert file to base64
+  const base64 = await fileToBase64(file);
+  
+  // Remove data URL prefix (e.g., "data:image/jpeg;base64,")
+  const base64Data = base64.split(',')[1];
 
-  const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+  const formData = new FormData();
+  formData.append('key', IMGBB_API_KEY);
+  formData.append('image', base64Data);
+
+  const response = await fetch('https://api.imgbb.com/1/upload', {
     method: 'POST',
     body: formData,
   });
 
-  if (!response.ok) {
-    throw new Error('Failed to upload image');
-  }
-
   const data = await response.json();
   
   if (!data.success) {
+    console.error('ImgBB error:', data);
     throw new Error(data.error?.message || 'Upload failed');
   }
 
   return data.data.url;
+}
+
+function fileToBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = (error) => reject(error);
+  });
 }
