@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cafe Olga Website
 
-## Getting Started
+Website profil dan sistem booking untuk Cafe Olga.
 
-First, run the development server:
+## Fitur
+- Homepage dengan hero section dan galeri
+- Katalog menu lengkap dengan kategori
+- Keranjang belanja + order via WhatsApp
+- Booking meja dengan pilih tanggal/jam
+- **Admin Dashboard** untuk kelola menu, booking, dan galeri
+- Integrasi Firebase (Firestore, Auth, Storage)
+- Responsive design (mobile-friendly)
 
+## Setup
+
+### 1. Install Dependencies
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cd cafe-olga
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Setup Firebase
+1. Buka [Firebase Console](https://console.firebase.google.com)
+2. Pilih project `web-olga-caffe`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+#### Aktifkan Firestore:
+- Build → Firestore Database → Create database
+- Pilih "Start in test mode" untuk development
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+#### Aktifkan Authentication:
+- Build → Authentication → Get started
+- Sign-in method → Email/Password → Enable
+- Users → Add user → Masukkan email & password admin
 
-## Learn More
+#### Aktifkan Storage:
+- Build → Storage → Get started
+- Pilih "Start in test mode"
 
-To learn more about Next.js, take a look at the following resources:
+### 3. Buat Akun Admin
+Di Firebase Console → Authentication → Users → Add user:
+- Email: `admin@cafeolga.com` (atau email lain)
+- Password: (buat password yang kuat)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 4. Jalankan Development Server
+```bash
+npm run dev
+```
+- Website: http://localhost:3000
+- Admin: http://localhost:3000/admin
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deploy ke Firebase Hosting
 
-## Deploy on Vercel
+```bash
+npm install -g firebase-tools
+firebase login
+npm run build
+firebase deploy
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Struktur Folder
+```
+cafe-olga/
+├── src/
+│   ├── app/
+│   │   ├── admin/     # Admin dashboard
+│   │   ├── menu/      # Halaman menu
+│   │   ├── booking/   # Halaman booking
+│   │   └── tentang/   # Halaman tentang
+│   ├── components/
+│   │   └── admin/     # Komponen admin
+│   ├── hooks/         # Custom hooks
+│   ├── data/          # Data statis
+│   └── lib/           # Firebase config
+├── public/images/     # Gambar website
+└── firebase.json
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Admin Dashboard
+Akses: `/admin`
+
+Fitur:
+- 🍽️ **Menu**: Tambah, edit, hapus menu + upload foto
+- 📅 **Booking**: Lihat & konfirmasi reservasi
+- 📸 **Galeri**: Upload & hapus foto galeri
+
+## Kontak
+- WhatsApp: 085274560663
+- Alamat: Jl. Jendral Sudirman, Samping Pecel Lele Barokah
