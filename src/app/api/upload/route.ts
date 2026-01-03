@@ -2,6 +2,18 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const IMGBB_API_KEY = "983c65c18779a75c25d95b44f228a648";
 
+// Handle OPTIONS for CORS preflight
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    },
+  });
+}
+
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
